@@ -2,9 +2,9 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ config.title }}</title>
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
-  <link href="{{ feed_url | uriencode }}" rel="self"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
-  <link href="{{ url | uriencode }}"/>
+  <link href="{{ url | uriencode }}{{config.feed.path | uriencode }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ url | uriencode }}" rel="alternate" type="text/html"/>
   <updated>{{ posts.first().updated.toISOString() }}</updated>
   <id>{{ url }}</id>
   {% if config.author %}
@@ -22,7 +22,15 @@
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
     {% if config.feed.content and post.content %}
-    <content type="html"><![CDATA[{{ post.content | safe }}]]></content>
+    <content type="html"><![CDATA[<p>
+      {% if post.description %}
+        {{ post.description }}
+      {% elif post.excerpt %}
+        {{ post.excerpt }}
+      {% elif post.content %}
+        {{ post.content.substring(0, 140) }}
+      {% endif %}
+      </p><p><a href="{{ (url + post.path) | uriencode }}">　[続きを読む]　</a></p>]]></content>
     {% endif %}
     <summary type="html">
     {% if post.description %}
