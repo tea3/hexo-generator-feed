@@ -3,7 +3,7 @@
   <title>{{ config.title }}</title>
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
-  <link href="{{ url | uriencode }}{{config.feed.path | uriencode }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ url | uriencode }}{{ feedFile | uriencode }}" rel="self" type="application/atom+xml"/>
   <link href="{{ url | uriencode }}" rel="alternate" type="text/html"/>
   <updated>{{ posts.first().updated.toISOString() }}</updated>
   <id>{{ url }}</id>

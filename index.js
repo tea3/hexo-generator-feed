@@ -1,8 +1,9 @@
 /* global hexo */
 'use strict';
 
-var assign = require('object-assign');
-var pathFn = require('path');
+var assign 	= require('object-assign');
+var pathFn 	= require('path');
+var gen 	= require('./lib/generator');
 
 var config = hexo.config.feed = assign({
   type: 'atom',
@@ -30,4 +31,15 @@ if (!pathFn.extname(config.path)) {
   config.path += '.xml';
 }
 
-hexo.extend.generator.register('feed', require('./lib/generator'));
+hexo.extend.generator.register('feed', module.exports = (locals) => {
+	return gen( locals , hexo , {
+		"customIndex" : true ,
+		"suffix"     : ""
+	})
+});
+hexo.extend.generator.register('feed-all',  module.exports = (locals) => {
+	return gen( locals , hexo , {
+		"customIndex" : false ,
+		"suffix"     : "a"
+	})
+});
