@@ -5,7 +5,7 @@
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
   <link href="{{ url | uriencode }}{{ feedFile | uriencode }}" rel="self" type="application/atom+xml"/>
   <link href="{{ url | uriencode }}" rel="alternate" type="text/html"/>
-  <updated>{{ posts.first().updated.toISOString() }}</updated>
+  <updated>{{ posts.first().updated_r }}</updated>
   <id>{{ url }}</id>
   {% if config.author %}
   <author>
@@ -20,7 +20,7 @@
     <link href="{{ (url + post.path) | uriencode }}"/>
     <id>{{ url + post.path }}</id>
     <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
+    <updated>{{ post.updated_r }}</updated>
     {% if config.feed.content and post.content %}
     <content type="html"><![CDATA[<p>
       {% if post.description %}
